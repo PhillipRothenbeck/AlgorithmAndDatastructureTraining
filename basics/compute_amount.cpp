@@ -61,6 +61,7 @@ int compute_amount(const int n) {
   int* res = (int*)malloc(amount_of_res * sizeof(int));
   int counter = 0;
 
+  //calculate all possible results for a^3 + b^3
   for(int a = 1; a <= n; a++) {
       for(int b = 1; b <= n; b++) {
           res[counter] = cubic(a) + cubic(b);
@@ -68,6 +69,7 @@ int compute_amount(const int n) {
       }
   }
 
+  //for each element count the amount how often it appears in the possible results
   for(int res1 = 0; res1 < amount_of_res; res1++) {
       for(int res2 = 0; res2 < amount_of_res; res2++) {
           if(res[res1] == res[res2]) {
@@ -75,9 +77,11 @@ int compute_amount(const int n) {
           }
       }
   }
+
   free(res);
   return amount;
 }
+// runtime for two for-loops: n^2 + n^2 in O(n^2)
 /*************** end assignment ***************/
 
 int main() {

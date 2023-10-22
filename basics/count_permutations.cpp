@@ -39,22 +39,28 @@ using namespace std;
 
 int count_permutations(const string &s, const string &b) {
   int count = 0;
+
+  // sort out all fault cases
   if(s.length() > b.length() || (s.empty() || b.empty())) {
       return 0;
   }
 
+  //for each letter in string b check if the next s.length() - 1 letter is a permutation of s
   for(int i = 0; i < (b.length() - (s.length() - 1)); i++) {
       int letter_count = s.length();
+      // copy snip it into array from big
       char *snip_it = (char*) malloc(s.length() * sizeof(char));
       for(int j = 0; j < s.length(); j++) {
           snip_it[j] = b[i + j];
       }
 
+      //check letter for letter of the string s if it is included in the snip it
       for(int j = 0; j < s.length(); j++) {
           for(int k = 0; k < s.length(); k++) {
               if(s[j] == snip_it[k]) {
                   letter_count--;
-                  snip_it[k] = 'A';
+                  // if letter equals to letter of s replace it with a '.'
+                  snip_it[k] = '.';
                   break;
               }
           }
@@ -70,6 +76,7 @@ int count_permutations(const string &s, const string &b) {
 
   return count;
 }
+// for each letter in string b if its snip it is a permutation; runtime: b * (s + s^2) in O(b * s^2)
 
 /*************** end assignment ***************/
 
