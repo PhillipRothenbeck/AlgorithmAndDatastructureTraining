@@ -5,7 +5,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <stack>
 
 using namespace std;
 
@@ -53,31 +52,42 @@ struct Binary_Tree_Node {
 // TODO: write code here
 
 int get_max(const Binary_Tree_Node *node) {
-    int left_max = get_max(node->left);
-    int right_max = get_max(node->right);
-    return max(node->data, max(left_max, right_max));
+    int maximum = node->data;
+    if (node->left != nullptr)
+        maximum = max(get_max(node->left), maximum);
+    if (node->right != nullptr)
+        maximum = max(get_max(node->right), maximum);
+
+    return maximum;
 }
 
 int get_min(const Binary_Tree_Node *node) {
-    int left_min = get_min(node->left);
-    int right_min = get_min(node->right);
-    return min(node->data, min(left_min, right_min));
+    int minimum = node->data;
+    if (node->left != nullptr)
+        minimum = min(get_min(node->left), minimum);
+    if (node->right != nullptr)
+        minimum = min(get_min(node->right), minimum);
+
+    return minimum;
 }
 
 bool is_binary_search_tree(const Binary_Tree_Node *node) {
     // TODO: write code here
-    std::cout << node->data << std::endl;
-    if (node == nullptr) return true;
+    if (node == nullptr) {
+        return false;
+    }
 
-    if (node->left != nullptr & get_max(node->left) > node->data) return false;
+    if (node->left != nullptr) {
+        if (get_max(node->left) > node->data | !is_binary_search_tree(node->left)) {
+            return false;
+        }
+    }
 
-    std::cout << "left tree is ok" << std::endl;
-
-    if (node->right != nullptr & get_min(node->right) < node->data) return false;
-
-    std::cout << "right tree is ok" << std::endl;
-
-    if (!is_binary_search_tree(node->left) | !is_binary_search_tree(node->left)) return false;
+    if (node->right != nullptr) {
+        if (get_min(node->right) < node->data | !is_binary_search_tree(node->right)) {
+            return false;
+        }
+    }
 
     return true;
 }
@@ -86,35 +96,29 @@ int main() {
     // TODO: Thoroughly test function "is_binary_search_tree"
     // (include also duplicate values in the tests).
     {
-        std::cout << "test 1" << std::endl;
         Binary_Tree_Node *root = nullptr;
         assert(is_binary_search_tree(root) == false);
     }
     {
-        std::cout << "test 2" << std::endl;
         Binary_Tree_Node root = {1, nullptr, nullptr};
         assert(is_binary_search_tree(&root) == true);
     }
     {
-        std::cout << "test 3" << std::endl;
         Binary_Tree_Node node1 = {1, nullptr, nullptr};
         Binary_Tree_Node root = {2, &node1, nullptr};
         assert(is_binary_search_tree(&root) == true);
     }
     {
-        std::cout << "test 4" << std::endl;
         Binary_Tree_Node node1 = {3, nullptr, nullptr};
         Binary_Tree_Node root = {2, &node1, nullptr};
         assert(is_binary_search_tree(&root) == false);
     }
     {
-        std::cout << "test 5" << std::endl;
         Binary_Tree_Node node1 = {2, nullptr, nullptr};
         Binary_Tree_Node root = {1, nullptr, &node1};
         assert(is_binary_search_tree(&root) == true);
     }
     {
-        std::cout << "test 6" << std::endl;
         Binary_Tree_Node node5 = {5, nullptr, nullptr};
         Binary_Tree_Node node4 = {1, nullptr, nullptr};
         Binary_Tree_Node node3 = {2, nullptr, nullptr};
@@ -123,7 +127,6 @@ int main() {
         assert(is_binary_search_tree(&root) == false);
     }
     {
-        std::cout << "test 7" << std::endl;
         Binary_Tree_Node node5 = {5, nullptr, nullptr};
         Binary_Tree_Node node4 = {1, nullptr, nullptr};
         Binary_Tree_Node node2 = {3, nullptr, nullptr};
@@ -132,7 +135,6 @@ int main() {
         assert(is_binary_search_tree(&root) == true);
     }
     {
-        std::cout << "test 8" << std::endl;
         Binary_Tree_Node node5 = {5, nullptr, nullptr};
         Binary_Tree_Node node4 = {1, nullptr, nullptr};
         Binary_Tree_Node node2 = {5, nullptr, nullptr};
@@ -140,6 +142,41 @@ int main() {
         Binary_Tree_Node root = {4, &node3, &node5};
         assert(is_binary_search_tree(&root) == false);
     }
+    {
+        Binary_Tree_Node node2 = {5, nullptr, nullptr};
+        Binary_Tree_Node node1 = {5, nullptr, nullptr};
+        Binary_Tree_Node root = {4, &node1, &node2};
+        assert(is_binary_search_tree(&root) == false);
+    }
+    {
+        Binary_Tree_Node node4 = {0, nullptr, nullptr};
+        Binary_Tree_Node node3 = {1, &node4, nullptr};
+        Binary_Tree_Node node2 = {2, &node3, nullptr};
+        Binary_Tree_Node node1 = {3, &node2, nullptr};
+        Binary_Tree_Node root = {4, &node1, nullptr};
+        assert(is_binary_search_tree(&root) == true);
+    }
+    {
+        Binary_Tree_Node node6 = {20, nullptr, nullptr};
+        Binary_Tree_Node node5 = {12, nullptr, nullptr};
+        Binary_Tree_Node node4 = {7, nullptr, nullptr};
+        Binary_Tree_Node node3 = {0, nullptr, nullptr};
+        Binary_Tree_Node node2 = {15, &node5, &node6};
+        Binary_Tree_Node node1 = {5, &node3, &node4};
+        Binary_Tree_Node root = {10, &node1, &node2};
+        assert(is_binary_search_tree(&root) == true);
+    }
+    {
+        Binary_Tree_Node node6 = {20, nullptr, nullptr};
+        Binary_Tree_Node node5 = {0, nullptr, nullptr};
+        Binary_Tree_Node node4 = {7, nullptr, nullptr};
+        Binary_Tree_Node node3 = {0, nullptr, nullptr};
+        Binary_Tree_Node node2 = {15, &node5, &node6};
+        Binary_Tree_Node node1 = {5, &node3, &node4};
+        Binary_Tree_Node root = {10, &node1, &node2};
+        assert(is_binary_search_tree(&root) == false);
+    }
+
     std::cout << "all tests passed" << std::endl;
 }
 

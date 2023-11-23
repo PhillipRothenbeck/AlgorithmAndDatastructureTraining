@@ -12,37 +12,37 @@ using namespace std;
 
 // this is a simple implementation of a trie
 class Trie {
-private:
-  struct Trie_Node {
-    // indicates whether the string corresponding to the path from the root is a
-    // string
-    bool is_string = false;
-    unordered_map<char, unique_ptr<Trie_Node>> nodes;
-  };
+   private:
+    struct Trie_Node {
+        // indicates whether the string corresponding to the path from the root is a
+        // string
+        bool is_string = false;
+        unordered_map<char, unique_ptr<Trie_Node>> nodes;
+    };
 
-  unique_ptr<Trie_Node> root = unique_ptr<Trie_Node>(new Trie_Node());
+    unique_ptr<Trie_Node> root = unique_ptr<Trie_Node>(new Trie_Node());
 
-public:
-  // insert a string into the trie
-  bool insert(const string &s) {
-    auto *p = root.get();
-    for (char c : s) {
-      if (p->nodes.find(c) == p->nodes.cend()) {
-        p->nodes[c] = unique_ptr<Trie_Node>(new Trie_Node());
-      }
-      p = p->nodes[c].get(); // get pointer of the next node in path
+   public:
+    // insert a string into the trie
+    bool insert(const string &s) {
+        auto *p = root.get();
+        for (char c : s) {
+            if (p->nodes.find(c) == p->nodes.cend()) {
+                p->nodes[c] = unique_ptr<Trie_Node>(new Trie_Node());
+            }
+            p = p->nodes[c].get();  // get pointer of the next node in path
+        }
+        // s already existed in this trie
+        if (p->is_string) {
+            return false;
+        } else {                  // p->is_string == false.
+            p->is_string = true;  // inserts s into this trie
+            return true;
+        }
     }
-    // s already existed in this trie
-    if (p->is_string) {
-      return false;
-    } else {               // p->is_string == false.
-      p->is_string = true; // inserts s into this trie
-      return true;
-    }
-  }
 
-  // TODO: implement this function
-  string shortest_prefix(const string &s);
+    // TODO: implement this function
+    string shortest_prefix(const string &s);
 };
 
 /************** begin assignment **************/
@@ -80,50 +80,64 @@ public:
 //   of how to move along a path in a trie.
 
 string Trie::shortest_prefix(const string &s) {
-  auto *p = root.get(); // get pointer of the root node
+    auto *p = root.get();  // get pointer of the root node
+    // TODO: write code here
+    string prefix = "";
+    bool all_chars_in = true;
+    for (char c : s) {
+        prefix = prefix + c;
+        if (p->nodes.find(c) != p->nodes.cend()) {
+            p = p->nodes[c].get();
+        } else {
+            all_chars_in = false;
+            break;
+        }
+    }
 
-  // TODO: write code here
-  
-  return "";
+    if (prefix.compare(s) == 0 && all_chars_in) {
+        prefix = "";
+    }
+
+    return prefix;
 }
 
 /*************** end assignment ***************/
 
 int main() {
-  {
-    Trie trie;
-    // fill trie with words
-    for (const string &s : {"dog", "be", "cut"}) {
-      trie.insert(s);
+    {
+        Trie trie;
+        // fill trie with words
+        for (const string &s : {"dog", "be", "cut"}) {
+            trie.insert(s);
+        }
+        assert(trie.shortest_prefix("cat") == "ca");
+        assert(trie.shortest_prefix("dog") == "");
+        assert(trie.shortest_prefix("bet") == "bet");
+        assert(trie.shortest_prefix("cow") == "co");
+        // there is no word starting with "p" in the trie, so the
+        // shortest prefix in "pig" is "p"
+        assert(trie.shortest_prefix("pig") == "p");
+        assert(trie.shortest_prefix("cutting") == "cutt");
+        assert(trie.shortest_prefix("cu") == "");  // "cu" is a prefix of "cut"
+        assert(trie.shortest_prefix("z") == "z");
+        // insert a new string into the trie
+        trie.insert("car");
+        assert(trie.shortest_prefix("cat") == "cat");
+        assert(trie.shortest_prefix("") == "");
     }
-    assert(trie.shortest_prefix("cat") == "ca");
-    assert(trie.shortest_prefix("dog") == "");
-    assert(trie.shortest_prefix("bet") == "bet");
-    assert(trie.shortest_prefix("cow") == "co");
-    // there is no word starting with "p" in the trie, so the
-    // shortest prefix in "pig" is "p"
-    assert(trie.shortest_prefix("pig") == "p");
-    assert(trie.shortest_prefix("cutting") == "cutt");
-    assert(trie.shortest_prefix("cu") == ""); // "cu" is a prefix of "cut"
-    assert(trie.shortest_prefix("z") == "z");
-    // insert a new string into the trie
-    trie.insert("car");
-    assert(trie.shortest_prefix("cat") == "cat");
-    assert(trie.shortest_prefix("") == "");
-  }
-  {
-    Trie trie;
-    // fill trie with words
-    for (const string &s : {"romane", "romanus", "romulus", "rubens", "ruber",
-                            "rubicon", "rubicundus"}) {
-      trie.insert(s);
+    {
+        Trie trie;
+        // fill trie with words
+        for (const string &s : {"romane", "romanus", "romulus", "rubens", "ruber",
+                                "rubicon", "rubicundus"}) {
+            trie.insert(s);
+        }
+        assert(trie.shortest_prefix("romane") == "");
+        assert(trie.shortest_prefix("romanes") == "romanes");
+        assert(trie.shortest_prefix("romines") == "romi");
+        assert(trie.shortest_prefix("rubons") == "rubo");
+        assert(trie.shortest_prefix("xyz") == "x");
+        assert(trie.shortest_prefix("rubicundicus") == "rubicundi");
     }
-    assert(trie.shortest_prefix("romane") == "");
-    assert(trie.shortest_prefix("romanes") == "romanes");
-    assert(trie.shortest_prefix("romines") == "romi");
-    assert(trie.shortest_prefix("rubons") == "rubo");
-    assert(trie.shortest_prefix("xyz") == "x");
-    assert(trie.shortest_prefix("rubicundicus") == "rubicundi");
-  }
-  cout << "all tests passed" << endl;
+    cout << "all tests passed" << endl;
 }
