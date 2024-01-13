@@ -1,0 +1,311 @@
+\documentclass[runningheads]{llncs}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+
+\begin{document}
+\title{Exam Assignments}
+
+\author{Phillip Rothenbeck}
+\institute{Training for Programming Contests and Interviews}
+
+\maketitle
+
+\section*{Assignment 1}
+
+\subsection*{What is the time complexity of the following code ... ?}%
+
+\subsubsection*{Code 2} \label{1:1:code2}
+\begin{verbatim}
+    void print_pairs(const vector<int> &vec) {
+        for (size_t i = 0; i < vec.size(); i++) {
+            for (size_t j = 0; j < vec.size(); j++) {
+                cout << "(" << vec[i] << ", " << vec[j] << ") ";
+            }
+        }
+    }
+    
+\end{verbatim}
+The code prints out all pairs, that are possible in the set of numbers appearing in the input vector. To achive this
+the program iterates for each number of the vector through the vector, resulting in the runtime complexity of
+$\mathcal{O}(n^2)$
+
+\subsubsection*{Code 6}
+\begin{verbatim}
+    void reverse(vector<int> &vec) {
+        for (size_t i = 0; i < vec.size() / 2; ++i) {
+            size_t other = vec.size() - i - 1;
+            int temp = vec[i];
+            vec[i] = vec[other];
+            vec[other] = temp;
+        }
+    }
+\end{verbatim}
+The code reverses the order of the elements in the entered vector. In each iteration two elements are exchanged,
+which means only half of the vector needs to be traversed. The runtime is $\frac{n}{2} \in \mathcal{O}(n)$
+
+\pagebreak
+\subsubsection*{Code 8}
+\begin{verbatim}
+    uint64_t factorial(uint64_t n) {
+        if (n == 0) {
+            return 1;
+        } else {
+            return n * factorial(n - 1);
+        }
+    }
+\end{verbatim}
+Since only one recursive call is made per function call the recursion tree is only one line, which terminates when
+$n = 0$. This happens after $n$ recursive call and concludes in a time complexity of $\mathcal{O}(n)$
+
+
+\subsection*{For each of the following time complexities: $\mathcal{O}(1)$, $\mathcal{O}(log n)$, $\mathcal{O}(n)$,
+    $\mathcal{O}(n log n)$ and $\mathcal{O}(n^2)$ give an algorithmic example.}
+
+\subsubsection*{$\mathcal{O}(1)$}
+\begin{verbatim}
+    int add(int a, int b) {
+        return a + b; 
+    }
+\end{verbatim}
+The function $add$ adds its inputs $a$ and $b$ together. Since this is done in constant time, the time complexity is
+$\mathcal{O}(1)$
+
+\subsubsection*{$\mathcal{O}(log n)$}
+Binary search has a time complexity of $\mathcal{O}(log n)$. The input array is already sorted. Using this information
+the algorithm compares the searched number with only the median of the array, which splits the array in two halves.
+Binary search recursively repeats this for the half, that could contain the searched number until it gets an empty
+input. The input array is a preorder traversal of a binary tree, which has a height of $log n$. The algorithm wanders
+only on one path between root and leaf, which concludes in the runtime of $\mathcal{O}(log n)$.
+
+\subsubsection*{$\mathcal{O}(n)$}
+\begin{verbatim}
+    int sum(int n, int *arr) {
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += arr[i];
+        }
+        return sum;
+    }
+\end{verbatim}
+For adding all numbers of an array together, an algorithm has to add each number to the sum. Resulting in $\mathcal{O}(n)$.
+
+\subsubsection*{$\mathcal{O}(n log n)$}
+The sorting algorithm Merge-Sort sorts an array of n numbers in $\mathcal{O}(n log n)$ time. When sorting the resulting
+recursion tree is binary and has the height of $log n$ with $n$ leafs. It has to go through every path from the root
+to each leaf (and combine each leaf to a sorted list afterwards in $log n$). This means it has a runtime of
+$(log n + log n) \cdot n = 2 log n \cdot n \in \mathcal{O}(n log n)$
+
+\subsubsection*{$\mathcal{O}(n^2)$}
+\begin{verbatim}
+    int sum(int n, int **m) {
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                sum += m[i][j];
+            }
+        }
+        return sum;
+    }
+\end{verbatim}
+This algorithm sums up all elements of an 2D array with n lines and n columns. For that it has to traverse all $n^2$
+elements.
+
+\subsection*{Outline the idea of how to retrospectively compute in $\mathcal{O}(n)$ the maximum profit when buying and then selling
+    a stock once.}
+
+The algorithm traverses the array of prices ones it saves the minimal price, that it has come across so far and the
+corresponding profit, that could have been made. For each price it calculates the profit from the saved minimal price
+and stores it, if it is bigger than the currently stored maximal profit it replaces that number. In addition, if the
+current price is smaller than the lowest stored price it will replace the current lowest price. This way the array
+needs to be traversed only once to calculate the highest profit.
+
+\subsection*{How would you check if string b is a permutation of string a.}
+
+I would check for both strings how often a letter is appearing in it. If the same letters appear in the same amount
+in both strings, they are permutations of each other.
+
+\section*{Assignment 2}
+
+\subsection*{How can we exploit bit operations for operations with sets?}
+
+A set can be converted into a bitset. The bitset is a binary number, in which a certain digit shows if an element exists
+in the set(1) or not(0). This can be exploited to do fast comparative operations on two sets like $and$ (intersection
+of two sets), $or$ (union of two sets) and $xor$ (symmetric difference of two sets). Since this happens with only one
+instruction it is significantly faster than when working with other set implementations.
+
+\subsection*{Explain the difference between arithmetic and logical right shifts for negative signed integers.}
+When using the logical right shift, uses 0s to fill the "gap" that is created on the left through shifting the
+numbers to right. This is working for unsigned numbers, but if the first bit is used as a sign bit this could
+potentially change the sign of the number. To prevent this problem the arithmetic right shift fills the "gap"
+with the same value as the sign bit.
+
+\subsection*{Outline an algorithm to count the number of bits that are set to 1 in an integer. (no bitset or built-in functions)}
+For this I would use a bit cursor, that always has exactly one bit set to 1 and is of the same length as the input
+number. The algorithm iterates over each bit and moves the 1 in the cursor to the looked upon digit. The intersection of
+the number and the cursor is formed. If it is greater than 0 a counter is incremented by one.
+
+\begin{verbatim}
+    uint_8 count_1_bits(uint_32 n) {
+        uint_8 counter = 0;
+        for (int i = 0; i < 32; i++) {
+            cursor = 1u << i;
+            if((cursor & n) > 0)  {
+                counter++;
+            }
+        }
+        return counter;
+    }
+\end{verbatim}
+
+\subsection*{Outline an algorithm to reverse the bits in an unsigned integer (swap bits at position i and n - i).}
+We have an index i that increments per iteration by one until it has reached the middle of the binary number. Now
+we take to cursors $first\_digit$ with a 1 at the $i$'th digit and $second\_digit$ with a 1 at the $n-i$'th. The
+$first\_digit$ cursor is shifted n-i times to the right and the $second\_digit$ cursor is shifted n-i times to the
+left. Lastly a union of the cursors and the output number is formed. The swapping is performed through the bit shifting.
+If the input number has an odd count of digits i runs to $\frac{bit\_length(n - 1)}{2}$
+
+\subsection*{Imagine you have to reorder integers in an array so that the odd entries appear first. How is this problem related to Quicksort’s partitioning function?}
+We introduce an index ($first\_even$) that sits at the position, where the first even number sits and all numbers to
+the left are odd. The other index($i$) is running across all numbers of the array. Every time $i$ comes across an odd
+number it swaps it with the number at the position of $first\_even$ and increments this index by one. The output array
+has all its odd numbers appearing first.
+
+\section*{Assignment 3}
+
+\subsection*{Outline an algorithm to convert a string to an unsigned integer (no negative numbers).}
+The algorithm subtracts 48 from each character in the string and multiplies it by the corresponding power
+of ten before adding it to the output number.
+
+\begin{verbatim}
+    Input: String s and its length n
+    digit = 10 ^ (n - 1)
+    number = 0
+    i = 1
+    repeat n times:
+        c = i'th character of s
+        x = (get ASCII value of c) - 48
+        number = number + x * digit
+        i = i + 1
+        digit = digit / 10
+    Output: number
+\end{verbatim}
+
+\subsection*{Outline an algorithm to convert an unsigned integer to a string.}
+The algorithm starts to allocate a string with a number of characters equal to the number of bits of the integer plus one.
+Each digit is extracted, 48 is added, and the resulting ASCII interpretation is stored in the corresponding position
+in the string.
+
+\begin{verbatim}
+    Input: integer x, stored in b bits
+    allocate string s with b + 1 characters and initialize the to ' '
+    pow = 10
+    rest = 0
+    repeat b times with index i from b - 1 to 0:
+        digit = (x % pow) - resulting
+        s[i] = digit + 48 // results in the ASCII value of the digit
+        pow = pow * 10
+        rest = rest + digit
+    Output: s
+\end{verbatim}
+
+\subsection*{Explain the characteristics of the character encodings ASCII, Extended ASCII, UTF-8, UTF-16 and UTF-32.}
+ASCII uses 7 bits to encode 128 characters, while Extended ASCII uses 8 bits to encode 256 characters. UTF-8 on the
+other hand uses its first bits to declare how many bytes are supposed to be read to get the character. UTF-8 is a
+superset of ASCII. UTF-16 can use one or two words of each 16 bits to encode one character, while UTF-32 has a fixed size
+of 4 bytes for all characters that it can encode.
+
+\subsection*{What advice can you give to modify strings as quickly as possible?}
+To avoid the time-consuming process of copying the entire string, string modifications should be handled in-place.
+If copying is unavoidable, minimize the number of times the string is copied. This can be
+achieved by marking the positions where modifications are to be made and finalizing them during the copying process.
+
+\subsection*{Why are hardcoded regex expressions often much faster?}
+Before using a regular expression it has to be compiled into a state machine, which is time-consuming.
+If the state machine for a certain regular expression is already known, it is faster to hardcode the
+state machine since this eliminates the step of automatically compiling. Additionally, exploiting
+certain characteristics of the regular expression can speed up runtime.
+
+\subsection*{Is run-length encoding a good compression method for strings?}
+This depends on the string that is supposed to be encoded. For instance the string cannot contain any digits,
+also it should not have a high frequency of changing characters. This could result in the encoded string
+being longer than the original. For strings that have a lot of longer sequences of alphabetical letters,
+run-length encoding may be a good compression method.
+
+\section*{Assignment 4}
+
+\subsection*{How to delete a (non-tail) node from a singly linked list without knowing its predecessor in $\mathcal{O}(1)$ time?}
+To achieve this, copy the values of the successor into the node containing the data to be deleted. Then, set the
+pointer of this node to the successor of its successor and delete the successor. This reduces the number of nodes
+by one and deletes the data of the node to be deleted.
+
+\subsection*{Explain the runner technique using a linked list example.}
+The runner technique involves using multiple pointers to iterate through a linked list at different speeds.
+This method can be used to find the pivot element that has 1/4 of all nodes to its right. One pointer
+(the runner) moves four times for each move the other pointer makes.
+
+\subsection*{If you were to tune the code for speed, how would you implement a stack?}
+I would use a \verb|std::vector| to implement a stack. Since this datastructure provides the method that a
+stack needs like \verb|push| (as \verb|push_back|), \verb|pop| (as \verb|pop_back|), \verb|empty| and
+\verb|top| (as \verb|back|). These functions are efficiently implemented, making them fast enough.
+
+\subsection*{How can we use a std::list in C++ as a queue?}
+To implement a queue using the \verb|std::list|, we first need to specify which side of the list should be the entrance point
+and which will be the exit. In this example, we use \verb|front| as the entrance and \verb|back| as the exit. To enqueue,
+we use the list function \verb|emplace_front| which constructs a new node at the front of the list with the new data. For
+dequeuing, we first save the data and then use \verb|pop_back| to delete the note. Finally, we return the data. The
+\verb|size| and \verb|empty| data give the information how big our queue is and if it is empty. Thus, all necessary
+mechanisms can be implemented using \verb|std::list|.
+
+\subsection*{How does a binary tree and a binary search tree differ?}
+A binary tree is a tree in which each node has at most two children. A binary search tree is a type of binary tree that adds
+the condition that for every node x, the left subtree only contains nodes that are lower or equal to x, and the right subtree only contains
+nodes being greater than x. Therefore, binary search trees are a strict subset of binary trees.
+
+\subsection*{Describe the different types of binary tree traversals.}
+There are three types of tree traversals. First is pre-order, meaning that we first process the current node followed by the left
+subtree, and then the right subtree. The second is in-order, which processes the left subtree first, then the current node, and finally
+the right subtree. Lastly there is post-order, where we start with the left subtree, continue with the right subtree, and finally process
+the current node.
+
+\subsection*{How does a trie and a radix tree differ?}
+Both a trie and a radix tree hold information for words in a path from the root. However, a trie assigns exactly one node to each character,
+while a radix tree is more compressed as it allows for a node to hold more than one letter. As a result, a radix tree requires fewer nodes than
+a trie, to store the same words as it merges a path that has no branches into one node.
+
+\section*{Assignment 5}
+
+\subsection*{Describe briefly the heap data structure.}
+The heap is a binary tree that has two conditions. Firstly, a child at depth k can only exist if all children at depth of k - 1 exist.
+This means that a new 'row' of children can only start, when the previous one is completely filled. Otherwise, a new child will be added from
+left to right in the incomplete row. Secondly, each node must be greater than or equal to its children. The time complexity for insertion is
+$\mathcal{O}(log n)$ as the heap characteristics must be maintained. Finding the maximum element takes $\mathcal{O}(1)$ time since the element
+is always located at the root. Deleting the maximum takes $\mathcal{O}(log n)$ time, while searching for an item has a complexity of
+$\mathcal{O}(n)$.
+
+\subsection*{How would you find the k longest words in a data stream? (You cannot back up to read an earlier value.)}
+Utilizing a min-heap can accomplish this task. Each word from the stream is added to the heap. The heap size is checked when a word is added to
+ensure it does not exceed k. If the size exceeds k, the shortest word in the heap is deleted. Once the whole stream has been processed, the heap
+will only contain the k longest words.
+
+\subsection*{How would you address the problem of merging multiple sorted files that are too large for RAM}
+To accomplish this task, a min-heap can be defined with only the smallest number of each file, resulting in a heap of the same size as the
+number of files to be merged. For merging, I iteratively would take the minimum from the min-heap, delete it and add it onto the resulting file.
+Then, I would push the next smallest number from the file that the minimum originated from. Thus, I would only have to have loaded the smallest number
+of each file and for each iteration load from the next number, which has a time complexity of $\mathcal{O}(1)$.
+
+\subsection*{What are sorting networks?}
+Sorting networks are data-oblivious sorting algorithms for arrays of a set size. Each network is constructed using out compare-and-exchange
+(COEX) modules, which compare two input numbers and exchange them if the condition is met. To be able to sort with these modules they have to be
+put into a specific order of comparing different elements of the array. This means that a sorting net can be hardcoded.
+
+\subsection*{Why sorting may speed up set operations?} %not checked
+Sorting reduces the amount of work that it takes to find a particular item in a set. Searching is a large part of set operations (when not
+represented as a bitset), since the availability of the elements of one set must be checked in another set.
+
+\subsection*{What is a minimal perfect hash?}
+
+\begin{thebibliography}{8}
+    %\bibitem{ref_url_pcb}
+
+\end{thebibliography}
+\end{document}
