@@ -1,8 +1,15 @@
+# folders
 .idea/
 .vscode/
 Folien/
+
+# compiled program
 *.exe
-*.txt
+
+# latex files
 *.pdf
-*.in
-*.ans
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
