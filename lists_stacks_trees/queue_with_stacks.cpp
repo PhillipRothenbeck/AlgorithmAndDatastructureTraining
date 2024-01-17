@@ -28,6 +28,7 @@ class Queue {
     // these are the only class variables you need to implement the queue.
     stack<T> enq, deq;
 
+    // move all elements from the enqueue stack to the dequeue stack
     void shift_stacks() {
         while (!enq.empty()) {
             deq.push(enq.top());
@@ -43,6 +44,7 @@ class Queue {
 
     // TODO: implement dequeue
     T dequeue() {
+        // if there are no elements in the dequeue stack put all the enqueue elements in dequeue
         if (deq.empty()) {
             shift_stacks();
         }
