@@ -73,6 +73,25 @@ vector<Employee> generate_random_vector(int n) {
 
 void bucket_sort(vector<Employee> &employees) {
     // TODO: Implement a bucket sort
+    vector<Employee> *buckets = new vector<Employee>[54];
+
+    // sort employees into buckets
+    for (Employee employee : employees) {
+        // convert to local address
+        Employee *empl = new Employee();
+        empl->age = employee.age;
+        empl->id = employee.id;
+        buckets[employee.age - 18].push_back(*empl);
+    }
+
+    // starting with the first bucket put the employees to their position according to their age
+    int idx = 0;
+    for (int i = 0; i < 54; i++) {
+        for (Employee employee : buckets[i]) {
+            employees[idx] = employee;
+            idx++;
+        }
+    }
 
     // Hint: reserve enough space for your buckets, so you don't need to resize
     // them later
@@ -90,7 +109,7 @@ int main() {
     }
 
     TIMERSTART(generate_random_vector)
-    int n = 100000000;
+    int n = 10000000;
     auto employees = generate_random_vector(n);
     auto copy_employees = employees;
     TIMERSTOP(generate_random_vector)
