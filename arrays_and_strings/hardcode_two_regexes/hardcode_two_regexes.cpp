@@ -203,17 +203,19 @@ inline void clean_coconut(string &s) {
 inline void clean_spaces(string &s) {
     // TODO: write code here
     std::string result;
-    bool continous_spaces = false;
+    bool continuous_spaces = false;
 
     for (char c : s) {
         if (c == ' ') {
-            if (!continous_spaces) {
+            // only if there was a non-space char before add c=' ' to the result string
+            if (!continuous_spaces) {
                 result += c;
-                continous_spaces = true;
+                continuous_spaces = true;
             }
         } else {
+            // add non-space char to result
             result += c;
-            continous_spaces = false;
+            continuous_spaces = false;
         }
     }
 
