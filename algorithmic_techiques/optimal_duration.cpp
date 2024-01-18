@@ -40,9 +40,13 @@ using namespace std;
 // a single task duration is between 0 and 10000)
 unsigned int optimal_duration(const vector<unsigned int> &tasks) {
     unsigned int total_duration = 0;
+    // sort the tasks
     vector<unsigned int> tasks_sorted(tasks.size());
     partial_sort_copy(begin(tasks), end(tasks), begin(tasks_sorted), end(tasks_sorted));
     for (int i = 0; i < tasks_sorted.size() / 2; i++) {
+        // pair the longest with the shortest path and the second longest
+        // with the second shortest and so an
+        // the total duration is the longest duration of a pair added up
         total_duration = max(total_duration, tasks_sorted[i] + tasks_sorted[tasks_sorted.size() - 1 - i]);
     }
     return total_duration;
