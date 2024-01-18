@@ -37,91 +37,94 @@ using namespace std;
 // - use a stack<int> for stacking the numbers
 
 int eval_rpn(const string &rpn_expression) {
-  stack<int> numbers;
-  stringstream ss{rpn_expression};
+    stack<int> numbers;
+    stringstream ss{rpn_expression};
 
-  int a, b, c;
-  std::string op;
-  while(ss >> op) {
-    if(!strcmp(op.c_str(), "+") | !strcmp(op.c_str(), "*") | !strcmp(op.c_str(), "-") | !strcmp(op.c_str(), "/")) {
-      a = numbers.top();
-      numbers.pop();
-      b = numbers.top();
-      numbers.pop();
-      if (!strcmp(op.c_str(), "+")) {
-        c = a + b;
-      } else if (!strcmp(op.c_str(), "-")) {
-        c = b - a;
-      } else if (!strcmp(op.c_str(), "*")) {
-        c = a * b;
-      } else {
-        c = b / a;
-      }
-      numbers.push(c);
-    } else {
-      int number = stoi(op);
-      numbers.push(number);
+    int a, b, c;
+    std::string op;
+    while (ss >> op) {
+        if (!strcmp(op.c_str(), "+") | !strcmp(op.c_str(), "*") | !strcmp(op.c_str(), "-") | !strcmp(op.c_str(), "/")) {
+            // if next char is a operator use it on the two top numbers of the number stack
+            a = numbers.top();
+            numbers.pop();
+            b = numbers.top();
+            numbers.pop();
+            // check what operator to use
+            if (!strcmp(op.c_str(), "+")) {
+                c = a + b;
+            } else if (!strcmp(op.c_str(), "-")) {
+                c = b - a;
+            } else if (!strcmp(op.c_str(), "*")) {
+                c = a * b;
+            } else {
+                c = b / a;
+            }
+            numbers.push(c);
+        } else {
+            // put numbers on number stack
+            int number = stoi(op);
+            numbers.push(number);
+        }
     }
-  }
-  return numbers.top();
+    return numbers.top();
 }
 /*************** end assignment ***************/
 
 int main() {
-  {
-    string rpn_expression = "5";
-    assert(eval_rpn(rpn_expression) == 5);
-  }
-  {
-    string rpn_expression = "6 7 -";
-    assert(eval_rpn(rpn_expression) == -1);
-  }
-  {
-    string rpn_expression = "1 2 +";
-    assert(eval_rpn(rpn_expression) == 3);
-  }
-  {
-    string rpn_expression = "6 2 *";
-    assert(eval_rpn(rpn_expression) == 12);
-  }
-  {
-    string rpn_expression = "12 2 /";
-    assert(eval_rpn(rpn_expression) == 6);
-  }
-  {
-    string rpn_expression = "12 2 /";
-    assert(eval_rpn(rpn_expression) == 6);
-  }
-  {
-    string rpn_expression = "3 4 + 2 * 1 +"; // (3 + 4) * 2 + 1
-    assert(eval_rpn(rpn_expression) == 15);
-  }
-  {
-    string rpn_expression = "3 2 1 + *"; // (1 + 2) * 3
-    assert(eval_rpn(rpn_expression) == 9);
-  }
-  {
-    string rpn_expression =
-        "4 2 5 * + 1 3 2 * + /"; // (4 + 2 * 5) / (1 + 3 * 2)
-    assert(eval_rpn(rpn_expression) == 2);
-  }
-  {
-    string rpn_expression =
-        "2 5 * 4 + 3 2 * 1 + /"; // (2 * 5 + 4 ) / (3 * 2 + 1)
-    assert(eval_rpn(rpn_expression) == 2);
-  }
-  {
-    string rpn_expression = "3 5 6 + * 12 4 / -"; // ((5 + 6) * 3) - (12 / 4)
-    assert(eval_rpn(rpn_expression) == 30);
-  }
-  {
-    string rpn_expression =
-        "100 10 2 -7 * * + 41 +"; // ((2 * (-7)) * 10) + 100 + 41
-    assert(eval_rpn(rpn_expression) == 1);
-  }
-  {
-    string rpn_expression = "-12 -56 -";
-    assert(eval_rpn(rpn_expression) == 44);
-  }
-  cout << "all tests passed" << endl;
+    {
+        string rpn_expression = "5";
+        assert(eval_rpn(rpn_expression) == 5);
+    }
+    {
+        string rpn_expression = "6 7 -";
+        assert(eval_rpn(rpn_expression) == -1);
+    }
+    {
+        string rpn_expression = "1 2 +";
+        assert(eval_rpn(rpn_expression) == 3);
+    }
+    {
+        string rpn_expression = "6 2 *";
+        assert(eval_rpn(rpn_expression) == 12);
+    }
+    {
+        string rpn_expression = "12 2 /";
+        assert(eval_rpn(rpn_expression) == 6);
+    }
+    {
+        string rpn_expression = "12 2 /";
+        assert(eval_rpn(rpn_expression) == 6);
+    }
+    {
+        string rpn_expression = "3 4 + 2 * 1 +";  // (3 + 4) * 2 + 1
+        assert(eval_rpn(rpn_expression) == 15);
+    }
+    {
+        string rpn_expression = "3 2 1 + *";  // (1 + 2) * 3
+        assert(eval_rpn(rpn_expression) == 9);
+    }
+    {
+        string rpn_expression =
+            "4 2 5 * + 1 3 2 * + /";  // (4 + 2 * 5) / (1 + 3 * 2)
+        assert(eval_rpn(rpn_expression) == 2);
+    }
+    {
+        string rpn_expression =
+            "2 5 * 4 + 3 2 * 1 + /";  // (2 * 5 + 4 ) / (3 * 2 + 1)
+        assert(eval_rpn(rpn_expression) == 2);
+    }
+    {
+        string rpn_expression = "3 5 6 + * 12 4 / -";  // ((5 + 6) * 3) - (12 / 4)
+        assert(eval_rpn(rpn_expression) == 30);
+    }
+    {
+        string rpn_expression =
+            "100 10 2 -7 * * + 41 +";  // ((2 * (-7)) * 10) + 100 + 41
+        assert(eval_rpn(rpn_expression) == 1);
+    }
+    {
+        string rpn_expression = "-12 -56 -";
+        assert(eval_rpn(rpn_expression) == 44);
+    }
+    cout << "all tests passed" << endl;
 }
