@@ -34,25 +34,58 @@ vector<Star> find_k_brightest_stars(ifstream &ifs, const size_t k) {
     // (brightest first)
 
     vector<Star> result;
-    string line;
-    while (getline(ifs, line)) {
-        if (line[0] == '#') {
-            continue;
-        }
-        stringstream ss(line);
-        string word;
-        string while (ss >> word) {
-            std::cout << word <<
-        }
-    }
 
     auto comparator = [](const Star &a, const Star &b) {
-        return true;
+        // to be able to use a min_heap map the small vmag values to big values and vice versa
+        // vmag value does not succeed the value -2
+        return 1 / (a.vmag + 2) > 1 / (b.vmag + 2);
     };
     // use a min heap
     priority_queue<Star, vector<Star>, decltype(comparator)> min_heap(comparator);
 
     // TODO: extract k brightest stars from the stream
+
+    string line;
+    while (getline(ifs, line)) {
+        if (line[0] == '#' || line == "") {
+            continue;
+        }
+        stringstream ss(line);
+        string word;
+        Star star;
+        int info_counter = 0;
+        int vmag_id = 8;
+        while (ss >> word) {
+            if (info_counter == 0) {
+                star.name = word;
+            }
+
+            // check if star has a double name
+            if (info_counter == 1) {
+                if (word.compare("HR") != 0 && word.compare("GJ") != 0 && word.compare("HD") != 0) {
+                    star.name += " " + word;
+                    vmag_id++;
+                }
+            }
+            if (info_counter == vmag_id) {
+                star.vmag = stod(word);
+            }
+            info_counter++;
+        }
+        min_heap.push(star);
+
+        // if the heap size exceeds k pop the less brighter elements
+        if (min_heap.size() > k) {
+            min_heap.pop();
+        }
+    }
+
+    for (int i = 0; i < k; i++) {
+        Star star = min_heap.top();
+        min_heap.pop();
+        // put the brightest stars at the beginning
+        result.insert(result.begin(), star);
+    }
 
     // return stars in sorted order (brightest first)
     return result;
