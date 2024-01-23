@@ -54,9 +54,9 @@ struct Binary_Tree_Node {
 int get_max(const Binary_Tree_Node *node) {
     int maximum = node->data;
     if (node->left != nullptr)
-        maximum = max(get_max(node->left), maximum);
+        maximum = max(get_max(node->left), maximum);  // get maximum from left subtree
     if (node->right != nullptr)
-        maximum = max(get_max(node->right), maximum);
+        maximum = max(get_max(node->right), maximum);  // get maximum from right subtree
 
     return maximum;
 }
@@ -64,9 +64,9 @@ int get_max(const Binary_Tree_Node *node) {
 int get_min(const Binary_Tree_Node *node) {
     int minimum = node->data;
     if (node->left != nullptr)
-        minimum = min(get_min(node->left), minimum);
+        minimum = min(get_min(node->left), minimum);  // get minimum from left subtree
     if (node->right != nullptr)
-        minimum = min(get_min(node->right), minimum);
+        minimum = min(get_min(node->right), minimum);  // get minimum from right subtree
 
     return minimum;
 }
@@ -77,12 +77,14 @@ bool is_binary_search_tree(const Binary_Tree_Node *node) {
         return false;
     }
 
+    // check recursively if left subtree is greater than current node
     if (node->left != nullptr) {
         if (get_max(node->left) > node->data | !is_binary_search_tree(node->left)) {
             return false;
         }
     }
 
+    // check recursively if left subtree is smaller than current node
     if (node->right != nullptr) {
         if (get_min(node->right) < node->data | !is_binary_search_tree(node->right)) {
             return false;

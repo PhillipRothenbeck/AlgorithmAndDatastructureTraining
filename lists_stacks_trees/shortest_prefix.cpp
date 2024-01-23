@@ -85,8 +85,8 @@ string Trie::shortest_prefix(const string &s) {
     string prefix = "";
     bool all_chars_in = true;
     for (char c : s) {
-        prefix = prefix + c;
-        if (p->nodes.find(c) != p->nodes.cend()) {
+        prefix = prefix + c;                        // add char c to prefix
+        if (p->nodes.find(c) != p->nodes.cend()) {  // check if c exists in current level of trie
             p = p->nodes[c].get();
         } else {
             all_chars_in = false;
@@ -94,6 +94,7 @@ string Trie::shortest_prefix(const string &s) {
         }
     }
 
+    // exclude all prefix that are equal to the input
     if (prefix.compare(s) == 0 && all_chars_in) {
         prefix = "";
     }
