@@ -303,6 +303,34 @@ Sorting reduces the amount of work that it takes to find a particular item in a 
 represented as a bitset), since the availability of the elements of one set must be checked in another set.
 
 \subsection*{What is a minimal perfect hash?}
+A hash function maps a key to an entry in a hash table. Now, a perfect hash function accomplish this without mapping different keys to the same entry.
+In contrast, a minimal hash function has no spaces in its hash table, that are not mapped on. Therefore, a minimal hash function ensures that two keys
+are not mapped to the same table entry and that the table has no unused spaces.
+
+\section*{Assignment 6}
+
+\subsection*{What is an optimal approach (as fast as possible) to compute the n-Queens problem with backtracking?}
+To find all correct solutions, we must go through all possibilities and to check which ones are correct. We do this by successively adding a queen row by row on
+the field. Starting with an empty field, we open a 'thread' (also called candidates) for each possible position where the queen can stand in the first row.
+For each candidate, a 'thread' is added which positions the queen in all possible positions in the second row. Illegal candidates are pruned until all
+rows are filled, leaving only the solution. This method is the fastest possible since we avoid following paths that are already known to be illegal.
+
+\subsection*{Describe some ideas how to solve the 15-puzzle with backtracking (tell me what you think is important).}
+To utilize backtracking, a metric is necessary to exclude moves that hinder us. Here, we use the Manhattan distance. For each candidate, we calculate the
+Manhatten distance of all entries to its target location, giving us the minimum amount of moves required to reach our goal. We will use the to prune
+candidates that exceed the maximum number of moves.
+
+\subsection*{Why is efficient parallelization not trivial in most divide and conquer algorithms?}
+Because of the merging that happens during divide and conquer some tasks in the these algorithms are depend on each other. For an easy parallelization approach
+a problem has to be easily devidable through an certain amount of cores.
+
+\subsection*{That is the difference between divide and conquer and decrease and conquer?}
+
+\subsection*{What is dynamic programming? When is it useful?}
+
+\subsection*{Compare the top-down approach with the bottom-up approach used in dynamic programming.}
+
+\subsection*{Present briefly a greedy heuristic of your choice.}
 
 \begin{thebibliography}{8}
     %\bibitem{ref_url_pcb}
