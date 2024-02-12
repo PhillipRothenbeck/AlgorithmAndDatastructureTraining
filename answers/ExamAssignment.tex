@@ -321,16 +321,29 @@ Manhatten distance of all entries to its target location, giving us the minimum 
 candidates that exceed the maximum number of moves.
 
 \subsection*{Why is efficient parallelization not trivial in most divide and conquer algorithms?}
-Because of the merging that happens during divide and conquer some tasks in the these algorithms are depend on each other. For an easy parallelization approach
-a problem has to be easily devidable through an certain amount of cores.
+The reason for this is that divide and conquer algorithms are integrated most of the time by using recursion. Since each recursion step depends on
+further recursion step, data dependencies make it hard to parallelize these applications. Furthermore, recursion function make it hard to do efficient
+load balancing which could lead to inefficient parallelization.
 
-\subsection*{That is the difference between divide and conquer and decrease and conquer?}
+\subsection*{What is the difference between divide and conquer and decrease and conquer?}
+Divide and conquer algorithms break the problems up into smaller and more manageable sub-problems. The each of them are solved and the results combined
+to solve the main problem. Decrease and conquer, on the other hand, reduces the problem into smaller problems of the same kind and solves them by mostly
+using the same algorithm. The main problem then can be resolved directly.
 
 \subsection*{What is dynamic programming? When is it useful?}
+The main primary principle of dynamic programming is to store the outcomes of sub-problems and retrieve them, when the sub-problem recurs, rather than recalculating the
+task. It can be applied to recursion and iterative solutions.
 
 \subsection*{Compare the top-down approach with the bottom-up approach used in dynamic programming.}
+As previously mentioned, dynamic programming can be applied to both recursive and iterative solutions. For iterative (bottom-up) solutions, the algorithm first solves
+smaller sub-problems first and then moves on to bigger problems until the main problem is reached. This approach makes it easier to write cache-efficient code. For
+instance, if a sub-problem depends only on the last n sub-problems, then only those results need to be stored. A top-down (recursive) solution works the other way round and
+starting with the main problem each step is broken down into smaller sub-problems. The results of these will be saved to prevent duplicate calculations. Therefore,
+all results must be stored simultaneously.
 
 \subsection*{Present briefly a greedy heuristic of your choice.}
+Using the movie scheduling problem, as an example, a possible greedy heuristic is to select the next earliest job (movie) that does not overlap, with any accepted job, until
+no job remains. This approach fits the definition of a greedy heuristic since the algorithm does not question its own choices and only makes decisions based on the local maximum.
 
 
 \section*{Assignment 12}
@@ -340,8 +353,8 @@ a problem has to be easily devidable through an certain amount of cores.
 Delete a set of edges so that a pair of two nodes are not located in the same component. The set of edges is supposed to have a minimal sum of
 edge weights.
 
-\subsubsection*{5 nodes}
-\includegraphics[scale=0.5]{graph_1}
+%\subsubsection*{5 nodes}
+%\includegraphics[scale=0.5]{graph_1}
 
 \begin{thebibliography}{8}
     %\bibitem{ref_url_pcb}
