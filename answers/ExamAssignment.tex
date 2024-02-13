@@ -345,6 +345,33 @@ all results must be stored simultaneously.
 Using the movie scheduling problem, as an example, a possible greedy heuristic is to select the next earliest job (movie) that does not overlap, with any accepted job, until
 no job remains. This approach fits the definition of a greedy heuristic since the algorithm does not question its own choices and only makes decisions based on the local maximum.
 
+\section*{Assignment 7}
+
+\subsection*{How do you decide how to spend your resources?}
+I always prioritize to build recyclers over robots, since their blocking ability makes them more powerful. I have split my bot into three phases. In the first phase, I only build if
+I have no recycler on the field. It is built in the spot of my domain with most resources, ensuring that I always get the most out of my single recycler. The rest of the scrap is
+spent for units to be able to conquer the most cells. In the second phase, my domain and the enemies are touching, and I build a recycler in any empty cell with a border to the enemy. The bot will build as many recyclers
+as it can in a turn. The rest is spent for units again. In the last phase, all scrap is spent into units to be able to conquer as many cells as possible and simultaneously not losing
+any cells to recyclers.
+
+\subsection*{How do you decide in which directions your bots move.}
+As mentioned before, my bot is split into three phases. In addition to that, I partition my units into three groups: Pawns, that only move to cells, without an owner and that are not the target of another unit. Defenders, that always
+peer to my border cells with the highest density of enemy units in the neighboring cells. Attackers, that move into empty enemy cells, but run from enemy units (into the enemy domain). I use the first phase to conquer as many
+cells as possible before I meet the enemy. Therefore, all of my units are pawns and one tries to quickly reach the middle of the field. In the second, each robot is classified depending on their position (Robots farther away from the
+enemy are pawns; Defenders are next to enemy units; Attackers are next to empty enemy cells). For the third phase, the pawn class only exists as long as reachable unclaimed cells exist, otherwise there are only defenders and attackers,
+chosen like in the step before.
+
+\subsection*{Are there situations where your bots behaved in a suboptimal way? Why does this happen? (At any point of the challenge)}
+When I came into silver league, my attacker robots were chasing enemy units. Some enemies had their units programmed to run away from my units. This resulted in a never ending chase and my domain being overrun by enemies.
+
+\subsection*{What are some heuristics to improve your bots performance? If you implemented them: how did it work? If you did not implement them, argue why you think they should work.}
+I implemented the all heuristics that I thought of. Looking at the behavior of a pawn, a greedy heuristic is applied, since the pawn decides on the momentary state of field which cell to move to next. Also, spawning a unit is a greedy heuristic.
+I calculate which of my cells are most likely to be overrun by enemy units (difference the between number of units in my cell and the number of enemy units in neighboring cells) and try to counterbalance this by spawning units in the cells in danger.
+If no such cells exist, spawn in connected component with unclaimed cells and no unit inside.
+
+\subsection*{What did you learn from observing other peoples bots? (At any point of the challenge)}
+One thing I learned was to cut off my enemy by building a wall of recyclers. I enhanced this by leaving a whole for my units to attack. Also, while building the wall, I try to increase my domain. As mentioned before, I took the idea running away
+from my opponent instead of chasing him down, from an opponent.
 
 \section*{Assignment 12}
 \subsection*{Describe the MinCut-Problem and give two examples with a small graph with
