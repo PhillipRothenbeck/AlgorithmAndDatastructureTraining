@@ -427,6 +427,23 @@ gets the next the nearest node of the graph, which is directly connected to the 
 nodes are added when t has been found. Since the changes do not change the process of the algorithm, it terminates just
 like Dijkstra does.
 
+\section*{Assignment 9}
+
+\subsection*{Argue why topological sortings only exist for acyclic graphs.}
+A topological sorting algorithm sorts the nodes of a graph in such way, that for each node n all predecessors are positioned in front of it and
+all successors of it lay behind it. If the input graph would be cyclic all node of the circle would be both predecessor and successor of each other.
+This would lead to an unclear or incorrect ordering.
+
+\subsection*{Briefly describe how you approached and solved Project Euler Problem 1.}
+The function solve($n$) computes the sum of all multiples of 3 and 5, that are less than $n$. It iterates through the index $i$ from 1 to $n$, and
+adds the corresponding multiples of 3 and 5 to the sum. If the respective multiple is greater than $n$, it is skipped. If both multiples are greater than $n$, the
+loop is aborted. For each multiple of 5, the function checks whether it is also a multiple of 3 as well. If this is the case, it is ignored to avoid adding the same number to the sum.
+
+\subsection*{Describe your approach on Project Euler Problem 107: which algorithm did you use and why?}
+Since the tasks asks for to search for a sub-graph in which all nodes are connected, but all unnecessary edges have been removed, following that the edge weights are minimal, one needs
+to find a minimal spanning tree. In class, we discussed only Prims algorithm and Kruskal's algorithm. Since no runtime limit was given and Prims algorithm was easier to implement, I chose
+to go with Prims algorithm.
+
 \section*{Assignment 12}
 \subsection*{Describe the MinCut-Problem and give two examples with a small graph with
     5 nodes and 7 edges (the graph has to be connected)}
