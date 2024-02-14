@@ -373,6 +373,60 @@ If no such cells exist, spawn in connected component with unclaimed cells and no
 One thing I learned was to cut off my enemy by building a wall of recyclers. I enhanced this by leaving a whole for my units to attack. Also, while building the wall, I try to increase my domain. As mentioned before, I took the idea running away
 from my opponent instead of chasing him down, from an opponent.
 
+\section{Assignment 8}
+
+\subsection*{If you need an efficient algorithm to find the shortest path between two nodes in a graph where all edges have length 1, which algorithm would you use and why?}
+If the shortest path between two nodes needs to be computed, I would use BFS because it is a simple method and can handle the graph, as edge lengths are uniform.
+
+\subsection*{Assume that you need to find a shortest path in a relatively small graph with arbitrary edge lengths, and you have to have a working algorithm very soon. Which algorithm would you choose and why?}
+I would use Dijkstra's algorithm, as it can handle non-uniform edge lengths, and is theoretically is the fastest algorithm to solve this task (only for one pair of nodes), from the pool of algorithms we learned in the lecture. Especially on a
+small graph, compared to Floyd-Warshall.
+
+\subsection*{Why does Dijkstra's algorithm not work with negative edge lengths? Give a small example.}
+The Dijkstra relies on the greedy heuristic, to always take the next node, with the smallest edge length, that is neighbor to an already connected node. It will always select a node connected with an edge with negative length. Which based on
+the interpretation of the graph could disturb the shortest path computation. Example:
+\begin{center}
+    \includegraphics{./resources/graph_0}
+\end{center}
+Here the path from A to D via C will always be selected as shortest path, since its length equals to -4. Resulting in a negative length for the path.
+
+\subsection*{Present an extension for Dijkstra's algorithm (pseudo-code or description) that also returns a list of nodes that form a shortest path. Explain (proof sketch) why that algorithm is correct.}
+\begin{verbatim}
+    each node is a pair of its distance to s and its index 
+
+    Input: adjacency matrix of input graph, start node s, sink node t
+
+    define priority queue Q, that sorts its elements by their distance
+    define an array D, holding the distances for each node
+    define a list P, that will hold all nodes of the shortest path
+    set flag t_found to false
+    put s into Q with distance 0
+    append s to P
+
+    while Q is not empty do:
+        get the top node n of Q
+        if not already set,
+            put the distance of n into D
+            if t_found is false: 
+                if n has an edge to the last node of P,
+                    append n to P
+                if n == t, 
+                    set t_found to true
+            append n to Q
+        for each node m do:
+            if n has an edge to m,
+                if in D not already set,
+                    distance d of m = m's distance to n + n's current distance
+                    put m into Q with distance d
+                    
+    Output: D, P
+\end{verbatim}
+
+Dijkstra still works since the structure of the algorithm is not changed, only additional data is added. P only
+gets the next the nearest node of the graph, which is directly connected to the last added node of P. Also no additional
+nodes are added when t has been found. Since the changes do not change the process of the algorithm, it terminates just
+like Dijkstra does.
+
 \section*{Assignment 12}
 \subsection*{Describe the MinCut-Problem and give two examples with a small graph with
     5 nodes and 7 edges (the graph has to be connected)}
