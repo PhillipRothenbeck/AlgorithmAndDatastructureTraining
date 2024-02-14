@@ -441,8 +441,19 @@ loop is aborted. For each multiple of 5, the function checks whether it is also 
 
 \subsection*{Describe your approach on Project Euler Problem 107: which algorithm did you use and why?}
 Since the tasks requires searching for a sub-graph where all nodes are connected and unnecessary edges have been removed, while ensuring minimal edge weights,
-a minimal spanning tree must be found. In class, we discussed Prim's algorithm and Kruskal's algorithm. As no runtime limit was specified and Prim's algorithm 
+a minimal spanning tree must be found. In class, we discussed Prim's algorithm and Kruskal's algorithm. As no runtime limit was specified and Prim's algorithm
 was easier to implement, I chose it.
+
+\section*{Assignment 10}
+
+\subsection*{Describe one change that significantly decreased your program length (apart from the obvious: deleting comments or whitespaces). What did you change and how many characters did it save?}
+The change was to use one variable for all unnecessary inputs and temporary variables. In general, I tried to reuse variables as often as possible, to reduce the amount of variable definitions that need
+to be done, saving me around 30 characters.
+
+\subsection*{Assume you are participating in a code-golf challenge where you have to write an algorithm (in C++) that finds the shortest path between two specified nodes in a graph. Which of the discussed algorithms (see Lecture 8) would you implement, and why?}
+I would use the Floyd-Warshall algorithm. It calculates all distances between all nodes, being way more than needed, but it requires the least code to work, as it works with only 3
+nested for loops. This can be reduced to a minimal, compared to Dijkstra for example.
+
 
 \section*{Assignment 12}
 \subsection*{Describe the MinCut-Problem and give two examples with a small graph with
