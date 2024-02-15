@@ -496,7 +496,17 @@ Each color represents one perfect matching.
 
 The following matching exists: (1, 4), (2, 4), (3, 5), (3, 6). Since both 3 and 4 are used twice for a pair, no perfect matching exists, but each node has at least one partner.
 
-\subsection*{Assignment 13}
+\section*{Assignment 13}
+
+\subsection*{Describe a kernel of the k-VertexCover-Problem: figure out which nodes have to (and which don’t have to) be in the VertexCover.}
+
+\subsubsection*{Kernel Step 1} Delete all nodes with degree 1 and add their neighbor to the VertexCover.
+
+\subsubsection*{Kernel Step 2} Delete all neighbors of the nodes currently in the VertexCover.
+
+\subsection*{Design an algorithm (pseudo-code) that constructs a minimal vertex cover for graphs where all nodes have degree at most 2. Your algorithm should run in time $O(n^c)$ where $n$ is the number of nodes in the graph, and $c$ is a constant (bonus point if you achieve $c = 1$). Prove the correctness and the runtime of your algorithm.}
+
+\subsection*{Describe your approach at this weeks programming exercise (Problem 1773-A). How does your algorithm find a pair of valid permutations?}
 
 \begin{thebibliography}{8}
     \bibitem{ref_EK_FF_relation} \url{https://cs.stackexchange.com/questions/109147/ford-fulkerson-vs-edmonds-karp}
