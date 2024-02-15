@@ -454,19 +454,52 @@ to be done, saving me around 30 characters.
 I would use the Floyd-Warshall algorithm. It calculates all distances between all nodes, being way more than needed, but it requires the least code to work, as it works with only 3
 nested for loops. This can be reduced to a minimal, compared to Dijkstra for example.
 
+\section*{Assignment 11}
+
+\subsection*{Research the difference between the algorithms by Edmonds-Karp and Ford-Fulkerson. Give an example where the Ford-Fulkerson-algorithm might take significantly longer than Edmonds-Karp.}
+Edmonds-Karp is a certain implementation of Ford-Fulkerson, using BFS to find the augmented path \cite{ref_EK_FF_relation}. While other implementations of Ford-Fulkerson use DFS.
+%% TODO
+
+\subsection*{Describe your algorithm that solves the Problem 100 ("3n+1-problem"): what algorithmic techniques did you use?}
+For each, the algorithm solves the given formula until the $n==1$ is reached. Looking at the results, the algorithm returns the same sequence for the same input. This means that if we come across an already known input, we can add the number of steps it took to complete
+the sequence to the steps already taken. For this I defined a hash map that takes a certain n as a key and the number it took to reach 1 as the value. This means I used dynamic programming.
+
+\subsection*{Which algorithm do you use for Problem 459 ("Graph Connectivity"), and why?}
+The Floyd-Warshall algorithm was utilized to calculate the distance between two nodes and determine their connectivity. This algorithm was chosen due to its ability to calculate all distances at once, which is advantageous for identifying all connected components within
+the input graph. Additionally, a list was implemented to track of all connectivity components that have been identified. In the list each component is represented by one node of the component. To check if a node is connected to a component, its distance to the component's
+representative is examined. This process is repeated for every node while simultaneously counting all new components encountered.
 
 \section*{Assignment 12}
-\subsection*{Describe the MinCut-Problem and give two examples with a small graph with
-    5 nodes and 7 edges (the graph has to be connected)}
 
-Delete a set of edges so that a pair of two nodes are not located in the same component. The set of edges is supposed to have a minimal sum of
-edge weights.
+\subsection*{Describe the MinCut-Problem and give two examples with a small graph with 5 nodes and 7 edges (the graph has to be connected)}
 
-%\subsubsection*{5 nodes}
-%\includegraphics[scale=0.5]{graph_1}
+\subsection*{MinCut}
+In a MinCut-Problem a set of edges E of the input graph, that cuts the graph int two components, with the nodes s and t being positioned in different components.
+Additionally, E is supposed to have minimal edge weights.
+
+\includegraphics[scale=0.5]{./resources/graph_1}
+
+The green cut is the minimal cut with a weight of 5. The red cut is not minimal with a weight of 12.
+
+\includegraphics[scale=0.5]{./resources/graph_2}
+
+The green cuts are the minimal cuts with edge weight of 5. The read cut is not minimal with a weight of 8.
+
+\subsection*{Matching}
+In a Matching-Problem pairs of nodes are supposed to be found, with the restriction that each edge belongs to at most one matching. A maximal matching is found if there is no other matching with more pairs node. In perfect matchings each node belongs to exactly one pair.
+
+\includegraphics[scale=0.5]{./resources/graph_3}
+
+Each color represents one perfect matching.
+
+\includegraphics[scale=0.5]{./resources/graph_4}
+
+The following matching exists: (1, 4), (2, 4), (3, 5), (3, 6). Since both 3 and 4 are used twice for a pair, no perfect matching exists, but each node has at least one partner.
+
+\subsection*{Assignment 13}
 
 \begin{thebibliography}{8}
-    %\bibitem{ref_url_pcb}
+    \bibitem{ref_EK_FF_relation} \url{https://cs.stackexchange.com/questions/109147/ford-fulkerson-vs-edmonds-karp}
 
 \end{thebibliography}
 \end{document}
