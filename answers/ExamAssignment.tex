@@ -457,8 +457,13 @@ nested for loops. This can be reduced to a minimal, compared to Dijkstra for exa
 \section*{Assignment 11}
 
 \subsection*{Research the difference between the algorithms by Edmonds-Karp and Ford-Fulkerson. Give an example where the Ford-Fulkerson-algorithm might take significantly longer than Edmonds-Karp.}
-Edmonds-Karp is a certain implementation of Ford-Fulkerson, using BFS to find the augmented path \cite{ref_EK_FF_relation}. While other implementations of Ford-Fulkerson use DFS.
-%% TODO
+Edmonds-Karp is a certain implementation of Ford-Fulkerson, using BFS to find the augmented path \cite{ref_EK_FF_relation}. While Ford-Fulkerson runs in $\mathcal{O}(EF)$ time with $E$ being the number of edges and $F$ the maximum capacity of the network, Edmonds-Karp runs in $\mathcal{O}(E*V^2)$.
+The worst case for Ford-Fulkerson is given by \cite{ref_FF_worst_case}:
+
+\includegraphics[scale=0.5]{./resources/graph_5}
+
+The first augmented path to be found would s-1-2-t turning the edge between 1 and 2 around. The second would be s-2-1-t, turning the edge again. These iterations would be repeated by the amount of the maximum capacity of the graph, with each step finding augmented paths with maximum flow equal to 1.
+Edmonds-Karp on the other hand always chooses the shortest augmented path. This results in a much lower runtime.
 
 \subsection*{Describe your algorithm that solves the Problem 100 ("3n+1-problem"): what algorithmic techniques did you use?}
 For each, the algorithm solves the given formula until the $n==1$ is reached. Looking at the results, the algorithm returns the same sequence for the same input. This means that if we come across an already known input, we can add the number of steps it took to complete
@@ -504,12 +509,13 @@ The following matching exists: (1, 4), (2, 4), (3, 5), (3, 6). Since both 3 and 
 
 \subsubsection*{Kernel Step 2} Delete all neighbors of the nodes currently in the VertexCover.
 
-\subsection*{Design an algorithm (pseudo-code) that constructs a minimal vertex cover for graphs where all nodes have degree at most 2. Your algorithm should run in time $O(n^c)$ where $n$ is the number of nodes in the graph, and $c$ is a constant (bonus point if you achieve $c = 1$). Prove the correctness and the runtime of your algorithm.}
+\subsection*{Design an algorithm (pseudo-code) that constructs a minimal vertex cover for graphs where all nodes have degree at most 2. Your algorithm should run in time $\mathcal{O}(n^c)$ where $n$ is the number of nodes in the graph, and $c$ is a constant (bonus point if you achieve $c = 1$). Prove the correctness and the runtime of your algorithm.}
 
 \subsection*{Describe your approach at this weeks programming exercise (Problem 1773-A). How does your algorithm find a pair of valid permutations?}
 
 \begin{thebibliography}{8}
-    \bibitem{ref_EK_FF_relation} \url{https://cs.stackexchange.com/questions/109147/ford-fulkerson-vs-edmonds-karp}
+    \bibitem{ref_EK_FF_relation} \url{https://cp-algorithms.com/graph/edmonds\_karp.html} 16.02.2024
+    \bibitem{ref_FF_worst_case} \url{https://hyperskill.org/learn/step/27203} 16.02.2024
 
 \end{thebibliography}
 \end{document}
