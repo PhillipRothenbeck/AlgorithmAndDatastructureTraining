@@ -503,11 +503,11 @@ The following matching exists: (1, 4), (2, 4), (3, 5), (3, 6). Since both 3 and 
 
 \section*{Assignment 13}
 
-\subsection*{Describe a kernel of the k-VertexCover-Problem: figure out which nodes have to (and which don’t have to) be in the VertexCover.}
+\subsection*{Describe a kernel of the $k$-VertexCover-Problem: figure out which nodes have to (and which don’t have to) be in the VertexCover.}
 
-\subsubsection*{Kernel Step 1} Delete all nodes with degree 1 and add their neighbor to the VertexCover.
-
-\subsubsection*{Kernel Step 2} Delete all neighbors of the nodes currently in the VertexCover.
+\subsubsection*{Kernel Step 1} Take out all nodes with a degree greater than $k$, these nodes have to be in the VertexCover, as otherwise all of its $k$ (or more) neighbors would then have to be in the cover. Also decrease $k$ by one for each of these.
+\subsubsection*{Kernel Step 2} Delete all isolated nodes, as they cover no edges.
+\subsubsection*{Kernel Step 3} If after steps 1 and 2 the Graph still contains more than $k^2$ edges, it cannot contain a VertexCover of the size $k$. This is because the graph only contains nodes with a degree of maximal $k$. This can cover $k^2$ edges at most.
 
 \subsection*{Design an algorithm (pseudo-code) that constructs a minimal vertex cover for graphs where all nodes have degree at most 2. Your algorithm should run in time $\mathcal{O}(n^c)$ where $n$ is the number of nodes in the graph, and $c$ is a constant (bonus point if you achieve $c = 1$). Prove the correctness and the runtime of your algorithm.}
 
