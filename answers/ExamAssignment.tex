@@ -543,6 +543,10 @@ every second vertex into the vertex cover.
 \subsubsection*{Runtime} The base algorithm runs in $\mathcal{O}(|V|)$, as all nodes are only looked at once. But, since we have to find the degrees of some node, which takes $\mathcal{O}(|V|^2)$. The whole algorithm takes $\mathcal{O}(|V|^2)$ setting $c = 2$
 
 \subsection*{Describe your approach at this weeks programming exercise (Problem 1773-A). How does your algorithm find a pair of valid permutations?}
+Firstly, the algorithm checks if a permutation exists for the input. This is done by building a bipartite graph with a layer for the input configuration and on each for the two permutations to be found. The layers are connected the way, that they do not break
+any rules for the permutations set by the task ($n_i \neq p(n_i)$). Now, each node is checked if it can reach its destination node. Finally, it is checked if two nodes need to cross the same middle layer node, if so no permutation can be found.  To find the
+permutations, starting with the first vertex $n_i$ by index, it is checked if a path to the desired position can be found. If this is the case, we save the path for the node. Otherwise, we delete the connection of the node $n_j$ that is currently blocking a
+possible path and store the newly opened path for $n_i$. Then we continue with $n_j$. This is done until a path for each node is found. The second part of the algorithms only works if it is confirmed that a permutation exists.
 
 \begin{thebibliography}{8}
     \bibitem{ref_EK_FF_relation} \url{https://cp-algorithms.com/graph/edmonds\_karp.html} 16.02.2024
