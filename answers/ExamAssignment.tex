@@ -509,7 +509,38 @@ The following matching exists: (1, 4), (2, 4), (3, 5), (3, 6). Since both 3 and 
 
 \subsubsection*{Kernel Step 2} Delete all neighbors of the nodes currently in the VertexCover.
 
+\newpage
 \subsection*{Design an algorithm (pseudo-code) that constructs a minimal vertex cover for graphs where all nodes have degree at most 2. Your algorithm should run in time $\mathcal{O}(n^c)$ where $n$ is the number of nodes in the graph, and $c$ is a constant (bonus point if you achieve $c = 1$). Prove the correctness and the runtime of your algorithm.}
+\begin{verbatim}
+    Input: Graph G as an adjacency matrix with set of edges E and set of vertexes V
+    define set VertexCover
+    add n to VertexCover
+
+    while V is not empty
+        if n not defined or if n has no neighbor:
+            if there is a node k of degree 1 in V:
+                get k's neighbor node n from V
+            else:
+                get random node n from V
+            remove k and n from V
+        if n has a neighbor v and:
+            if v has a neighbor:
+                set the neighbor as the new n
+                remove n from V
+                add n t VertexCover
+            remove v from V
+    Output: VertexCover
+\end{verbatim}
+
+\subsubsection*{Correctness}
+\subsubsection*{Case 1: Linear Graph with uneven number of nodes} The size of the minimal vertex cover is $\lceil\frac{n}{2}\rceil$. This will only be reached if
+the two border nodes with degree 1 are not in the vertex cover. This is reached by putting the neighbor of one of these in the cover. From there on every second node
+will be put into the cover, ending with the neighbor of the second node with degree 1. This results in $\lceil\frac{n}{2}\rceil$ nodes in the vertex cover.
+\subsubsection*{Case 2: Linear Graph with even number of nodes} The size of the minimal vertex cover equals $\frac{n}{2}$. Just like in Case 1, this is reached by taking
+every second vertex into the vertex cover.
+\subsubsection*{Case 3: Circular Graph} If the Graph is circular the starting node is selected randomly instead of choosing a node next to a vertex with degree 1, as all nodes have the degree 2.
+
+\subsubsection*{Runtime} The base algorithm runs in $\mathcal{O}(|V|)$, as all nodes are only looked at once. But, since we have to find the degrees of some node, which takes $\mathcal{O}(|V|^2)$. The whole algorithm takes $\mathcal{O}(|V|^2)$ setting $c = 2$
 
 \subsection*{Describe your approach at this weeks programming exercise (Problem 1773-A). How does your algorithm find a pair of valid permutations?}
 
