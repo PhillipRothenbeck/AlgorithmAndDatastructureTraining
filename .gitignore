@@ -7,7 +7,6 @@ Folien/
 *.exe
 
 # latex files
-*.pdf
 *.aux
 *.fdb_latexmk
 *.fls
